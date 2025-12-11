@@ -1,61 +1,91 @@
-# Lista Inteligente JF 🛒
+<div align="center">
 
-O **Lista Inteligente JF** é uma Progressive Web App (PWA) moderna, profissional e estilizada para gerenciamento de compras de supermercado. O projeto foi completamente reescrito usando **React**, **Vite** e **TailwindCSS** para oferecer uma experiência de usuário premium.
+  <img src="public/pwa-512x512.png" alt="logo" width="120" height="120" />
+  
+  # Lista Inteligente JF
+  
+  <p>
+    <b>Seu Assistente de Compras Inteligente, Moderno e Offline.</b>
+  </p>
 
-![App Preview](https://via.placeholder.com/800x400?text=Lista+Inteligente+JF+Preview)
+  <p>
+    <a href="https://github.com/jfcreativelab/ListaInteligenteJF/actions/workflows/deploy.yml">
+      <img src="https://github.com/jfcreativelab/ListaInteligenteJF/actions/workflows/deploy.yml/badge.svg" alt="Deploy Status" />
+    </a>
+    <a href="https://github.com/jfcreativelab/ListaInteligenteJF/blob/main/LICENSE">
+      <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
+    </a>
+    <img src="https://img.shields.io/badge/version-1.0.0-green.svg" alt="Version" />
+    <img src="https://img.shields.io/badge/made%20with-React%20%2B%20Vite-61DAFB.svg" alt="Made with React" />
+  </p>
 
-## 🚀 Tecnologias
+  <p>
+    <a href="#-funcionalidades">Funcionalidades</a> •
+    <a href="#-tecnologias">Tecnologias</a> •
+    <a href="#-instalação">Instalação</a> •
+    <a href="#-licença">Licença</a>
+  </p>
 
-- **React 18** (via Vite)
-- **TypeScript**
-- **TailwindCSS v4** (Estilização Moderna)
-- **Framer Motion** (Animações Fluidas)
-- **Lucide React** (Ícones)
-- **Recharts** (Gráficos)
-- **Vite PWA Plugin** (Funcionalidade Offline)
-
-## ✨ Funcionalidades Principais
-
-- **📱 Design Mobile-First & PWA**: Instale no seu celular ou computador. Funciona 100% offline.
-- **🗣️ Adição por Voz Inteligente**: Diga "2 Leites" e o app entende a quantidade e o nome automaticamente.
-- **🏷️ Auto-Categorização**: O app sugere categorias (Hortifruti, Padaria, etc.) enquanto você digita.
-- **🔎 Pesquisa de Produtos**: Banco de dados simulado com busca de preços e fallback para o Google Shopping.
-- **👆 Gestos (Swipe-to-Delete)**: Deslize para a esquerda para remover itens rapidamente.
-- **💰 Controle de Orçamento**: Defina um teto de gastos e acompanhe o progresso visualmente.
-- **📊 Dashboard Financeiro**: Gráficos interativos para visualizar seus gastos por categoria.
-- **📤 Exportar para WhatsApp**: Compartilhe a lista organizada com um clique.
-- **🔔 Notificações**: Feedback visual elegante (Toasts) para ações do usuário.
-- **🌙 Modo Escuro**: Tema dark totalmente integrado e refinado.
-
-## 🛠️ Como Rodar Localmente
-
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/jfcreativelab/ListaInteligenteJF.git
-   ```
-2. Instale as dependências:
-   ```bash
-   npm install
-   ```
-3. Rode o servidor de desenvolvimento:
-   ```bash
-   npm run dev
-   ```
-
-## 📦 Build para Produção
-
-Para gerar a versão otimizada para produção:
-
-```bash
-npm run build
-```
-
-Para visualizar a versão de produção localmente:
-
-```bash
-npm run preview
-```
+</div>
 
 ---
 
-Desenvolvido com ❤️ por **JF Creative Lab**.
+## 🚀 Sobre o Projeto
+
+O **Lista Inteligente JF** não é apenas mais uma lista de compras. É uma **Progressive Web App (PWA)** completa, desenhada para oferecer uma experiência de usuário **premium** e **inteligente**.
+
+Com recursos como reconhecimento de voz, auto-categorização e funcionamento offline, ele transforma a ida ao supermercado em uma tarefa organizada e eficiente.
+
+## ✨ Funcionalidades
+
+| Recurso | Descrição |
+| :--- | :--- |
+| **🗣️ Voz Inteligente** | Diga *"3 Caixas de Leite"* e o app entende quantidade e nome. |
+| **🔎 Busca Smart** | Pesquise preços e marcas em nosso banco de dados simulado. |
+| **🏷️ Auto-Cat** | Digitou "Sabão"? O app já sabe que é *Limpeza*. |
+| **💰 Orçamento** | Defina quanto quer gastar e acompanhe a barra de progresso. |
+| **📱 PWA Offline** | Funciona sem internet. Instale no iOS, Android ou Windows. |
+| **👆 Gestos** | Deslize para a esquerda para apagar (`Swipe-to-Delete`). |
+| **🌙 Modo Escuro** | Tema dark elegante e automático. |
+| **📤 WhatsApp** | Compartilhe a lista formatada com um clique. |
+
+## 🛠️ Tecnologias
+
+Este projeto utiliza o que há de mais moderno no ecossistema Web:
+
+-   **Core**: [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
+-   **Linguagem**: [TypeScript](https://www.typescriptlang.org/)
+-   **Estilo**: [TailwindCSS v4](https://tailwindcss.com/)
+-   **Animações**: [Framer Motion](https://www.framer.com/motion/)
+-   **Gráficos**: [Recharts](https://recharts.org/)
+-   **Ícones**: [Lucide React](https://lucide.dev/)
+-   **Notificações**: [Sonner](https://sonner.emilkowal.ski/)
+-   **PWA**: [Vite Plugin PWA](https://vite-pwa-org.netlify.app/)
+
+## 📦 Instalação
+
+Quer rodar no seu computador? É fácil:
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/jfcreativelab/ListaInteligenteJF.git
+
+# 2. Entre na pasta
+cd ListaInteligenteJF
+
+# 3. Instale as dependências
+npm install
+
+# 4. Rode o servidor
+npm run dev
+```
+
+## 📄 Licença
+
+Este projeto está sob a licença **MIT**. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+---
+
+<div align="center">
+  <p>Desenvolvido com ❤️ e ☕ por <b>JF Creative Lab</b></p>
+</div>
