@@ -18,12 +18,6 @@ export const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
     const [onlineResults, setOnlineResults] = useState<MLEtem[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    if (!isOpen) return null;
-
-    const filtered = query.length > 1
-        ? MOCK_PRODUCTS.filter(p => p.name.toLowerCase().includes(query.toLowerCase()))
-        : [];
-
     useEffect(() => {
         if (searchMode === 'online' && query.length > 2) {
             const delayDebounceFn = setTimeout(async () => {
@@ -36,6 +30,12 @@ export const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
             return () => clearTimeout(delayDebounceFn);
         }
     }, [query, searchMode]);
+
+    if (!isOpen) return null;
+
+    const filtered = query.length > 1
+        ? MOCK_PRODUCTS.filter(p => p.name.toLowerCase().includes(query.toLowerCase()))
+        : [];
 
     const handleAdd = (name: string, price: number) => {
         addItem({
