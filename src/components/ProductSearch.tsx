@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Search, X, ShoppingCart, Globe, Package } from 'lucide-react';
+import { Search, X, ShoppingCart, Globe, Package, Loader2 } from 'lucide-react';
 import { MOCK_PRODUCTS } from '../utils/productDb';
-import { searchMercadoLivre, type MLEtem } from '../services/mercadolivre';
+import { searchOnlineProducts, type OnlineProduct } from '../services/openfoodfacts';
 import { useShopping } from '../context/ShoppingContext';
 import { toast } from 'sonner';
 import { categorizeItem } from '../utils/autocategorize';
@@ -15,17 +15,17 @@ export const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
     const { addItem } = useShopping();
     const [query, setQuery] = useState('');
     const [searchMode, setSearchMode] = useState<'local' | 'online'>('local');
-    const [onlineResults, setOnlineResults] = useState<MLEtem[]>([]);
+    const [onlineResults, setOnlineResults] = useState<OnlineProduct[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (searchMode === 'online' && query.length > 2) {
             const delayDebounceFn = setTimeout(async () => {
                 setIsLoading(true);
-                const results = await searchMercadoLivre(query);
+                const results = await searchOnlineProducts(query);
                 setOnlineResults(results);
                 setIsLoading(false);
-            }, 600);
+            }, 800);
 
             return () => clearTimeout(delayDebounceFn);
         }
@@ -67,7 +67,7 @@ export const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                         className={`flex-1 p-3 text-sm font-medium flex items-center justify-center gap-2 transition-colors ${searchMode === 'online' ? 'text-primary border-b-2 border-primary bg-primary/5' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}`}
                     >
                         <Globe size={18} />
-                        Busca Online (ML)
+                        Busca Global
                     </button>
                 </div>
 
@@ -76,7 +76,7 @@ export const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                     <Search className="text-slate-400" />
                     <input
                         type="text"
-                        placeholder={searchMode === 'local' ? "Buscar no app..." : "Buscar no Mercado Livre..."}
+                        placeholder={searchMode === 'local' ? "Buscar no app..." : "Digite o nome do produto..."}
                         className="flex-1 bg-transparent border-none outline-none text-lg text-slate-800 dark:text-slate-100 placeholder:text-slate-400"
                         value={query}
                         onChange={e => setQuery(e.target.value)}
@@ -108,7 +108,7 @@ export const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                                     </div>
                                     <div className="text-center py-4">
                                         <button onClick={() => setSearchMode('online')} className="text-primary text-sm font-medium hover:underline">
-                                            Não achou? Buscar Online &rarr;
+                                            Não achou? Buscar Global &rarr;
                                         </button>
                                     </div>
                                 </div>
@@ -143,7 +143,7 @@ export const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                                         onClick={() => setSearchMode('online')}
                                         className="bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary-light transition shadow-lg shadow-primary/20"
                                     >
-                                        Buscar "{query}" na Internet
+                                        Buscar "{query}" na Web
                                     </button>
                                 </div>
                             )}
@@ -154,9 +154,9 @@ export const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                     {searchMode === 'online' && (
                         <div>
                             {isLoading ? (
-                                <div className="py-20 text-center text-slate-400">
-                                    <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
-                                    <p>Buscando ofertas...</p>
+                                <div className="py-20 text-center text-slate-400 flex flex-col items-center">
+                                    <Loader2 className="w-8 h-8 animate-spin text-primary mb-4" />
+                                    <p>Buscando na base de dados global...</p>
                                 </div>
                             ) : onlineResults.length > 0 ? (
                                 <div className="grid grid-cols-2 gap-3">
@@ -164,17 +164,27 @@ export const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                                         <button
                                             key={item.id}
                                             onClick={() => handleAdd(item.title, item.price)}
-                                            className="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 text-left hover:shadow-lg transition-all flex flex-col gap-2 h-full"
+                                            className="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 text-left hover:shadow-lg transition-all flex flex-col gap-2 h-full relative group"
                                         >
                                             <div className="w-full h-32 bg-white rounded-lg flex items-center justify-center overflow-hidden p-2">
-                                                <img src={item.thumbnail} alt={item.title} className="max-h-full object-contain mix-blend-multiply" />
+                                                <img
+                                                    src={item.thumbnail}
+                                                    alt={item.title}
+                                                    className="max-h-full object-contain mix-blend-multiply"
+                                                    loading="lazy"
+                                                />
                                             </div>
                                             <div className="flex-1">
-                                                <h4 className="text-sm font-medium text-slate-700 dark:text-slate-200 line-clamp-2 leading-snug">{item.title}</h4>
+                                                <h4 className="text-xs font-medium text-slate-700 dark:text-slate-200 line-clamp-3 leading-snug" title={item.title}>
+                                                    {item.title}
+                                                </h4>
                                             </div>
                                             <div className="flex justify-between items-end mt-2">
-                                                <div className="font-bold text-primary text-lg">R$ {item.price.toFixed(2)}</div>
-                                                <div className="bg-primary/10 p-1.5 rounded-full text-primary">
+                                                <div className="flex flex-col">
+                                                    <span className="text-[10px] text-slate-400">Estimado</span>
+                                                    <span className="font-bold text-slate-600 dark:text-slate-300 text-sm">~R$ {item.price.toFixed(2)}</span>
+                                                </div>
+                                                <div className="bg-primary/10 p-1.5 rounded-full text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                                                     <ShoppingCart size={16} />
                                                 </div>
                                             </div>
@@ -183,14 +193,14 @@ export const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                                 </div>
                             ) : query.length > 2 && (
                                 <div className="text-center py-10 text-slate-500">
-                                    <p>Nenhum resultado encontrado no Mercado Livre.</p>
+                                    <p>Nenhum resultado encontrado.</p>
                                 </div>
                             )}
 
                             {query.length <= 2 && (
                                 <div className="text-center py-10 text-slate-400">
                                     <Globe size={48} className="mx-auto mb-4 opacity-20" />
-                                    <p>Digite para pesquisar em milhares de produtos online.</p>
+                                    <p>Pesquise em milhares de produtos mundiais.</p>
                                 </div>
                             )}
                         </div>
