@@ -13,8 +13,8 @@ export interface UniversalProduct {
  */
 export const searchUniversalProducts = async (query: string): Promise<UniversalProduct[]> => {
     try {
-        // Using allorigins.win to bypass CORS restrictions on ML API
-        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        // Using allorigins.win/get (JSON wrapper) which is more reliable for CORS than /raw
+        const proxyUrl = 'https://api.allorigins.win/get?url=';
         const targetUrl = `https://api.mercadolibre.com/sites/MLB/search?q=${encodeURIComponent(query)}&limit=20`;
 
         const response = await fetch(`${proxyUrl}${encodeURIComponent(targetUrl)}`);
@@ -23,7 +23,8 @@ export const searchUniversalProducts = async (query: string): Promise<UniversalP
             throw new Error(`Proxy/API Error: ${response.status}`);
         }
 
-        const data = await response.json();
+        const wrapper = await response.json();
+        const data = JSON.parse(wrapper.contents);
 
         if (!data.results || !Array.isArray(data.results)) {
             return [];
