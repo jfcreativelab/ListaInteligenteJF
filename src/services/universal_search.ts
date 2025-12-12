@@ -31,7 +31,7 @@ export const searchUniversalProducts = async (query: string): Promise<UniversalP
             if (!response.ok) continue;
 
             let data;
-            const contentType = response.headers.get("content-type");
+            // const contentType = response.headers.get("content-type");
 
             // Handle AllOrigins JSON wrapper
             if (proxyUrl.includes('allorigins.win')) {
