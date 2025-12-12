@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, X, ShoppingCart, Globe, Package, Loader2, ExternalLink } from 'lucide-react';
+import { Search, X, ShoppingCart, Globe, Package, Loader2 } from 'lucide-react';
 import { MOCK_PRODUCTS } from '../utils/productDb';
 import { searchUniversalProducts, type UniversalProduct } from '../services/universal_search';
 import { useShopping } from '../context/ShoppingContext';
