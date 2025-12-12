@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Search, X, ShoppingCart, Globe, Package, Loader2 } from 'lucide-react';
+import { Search, X, ShoppingCart, Globe, Package, Loader2, ExternalLink } from 'lucide-react';
 import { MOCK_PRODUCTS } from '../utils/productDb';
-import { searchOnlineProducts, type OnlineProduct } from '../services/openfoodfacts';
+import { searchUniversalProducts, type UniversalProduct } from '../services/universal_search';
 import { useShopping } from '../context/ShoppingContext';
 import { toast } from 'sonner';
 import { categorizeItem } from '../utils/autocategorize';
@@ -15,14 +15,14 @@ export const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
     const { addItem } = useShopping();
     const [query, setQuery] = useState('');
     const [searchMode, setSearchMode] = useState<'local' | 'online'>('local');
-    const [onlineResults, setOnlineResults] = useState<OnlineProduct[]>([]);
+    const [onlineResults, setOnlineResults] = useState<UniversalProduct[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (searchMode === 'online' && query.length > 2) {
             const delayDebounceFn = setTimeout(async () => {
                 setIsLoading(true);
-                const results = await searchOnlineProducts(query);
+                const results = await searchUniversalProducts(query);
                 setOnlineResults(results);
                 setIsLoading(false);
             }, 800);
@@ -67,7 +67,7 @@ export const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                         className={`flex-1 p-3 text-sm font-medium flex items-center justify-center gap-2 transition-colors ${searchMode === 'online' ? 'text-primary border-b-2 border-primary bg-primary/5' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}`}
                     >
                         <Globe size={18} />
-                        Busca Global
+                        Busca Universal
                     </button>
                 </div>
 
@@ -76,7 +76,7 @@ export const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                     <Search className="text-slate-400" />
                     <input
                         type="text"
-                        placeholder={searchMode === 'local' ? "Buscar no app..." : "Digite o nome do produto..."}
+                        placeholder={searchMode === 'local' ? "Buscar no app..." : "Digite (ex: Panela, Arroz)..."}
                         className="flex-1 bg-transparent border-none outline-none text-lg text-slate-800 dark:text-slate-100 placeholder:text-slate-400"
                         value={query}
                         onChange={e => setQuery(e.target.value)}
