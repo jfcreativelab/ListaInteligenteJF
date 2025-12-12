@@ -7,7 +7,7 @@ export interface OnlineProduct {
 
 export const searchOnlineProducts = async (query: string): Promise<OnlineProduct[]> => {
     try {
-        const response = await fetch(`https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=20`);
+        const response = await fetch(`https://br.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=20&lc=pt`);
 
         if (!response.ok) {
             throw new Error(`API Error: ${response.status}`);
